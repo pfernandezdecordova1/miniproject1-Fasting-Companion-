@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasting Companion - Stay Hydrated & Healthy</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Fasting Companion</h1>
+            <p class="subtitle">Maintain your health during fasting periods</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+                        <section class="personal-info-section">
+                            <h2>Your Personal Information</h2>
+                            <p style="color: #666; margin-bottom: 20px;">Please fill in your information to get personalized recommendations</p>
+                            <div class="info-form">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" placeholder="Enter your name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="age">Age</label>
+                                    <input type="number" id="age" placeholder="Enter your age" min="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="weight">Weight (kg)</label>
+                                    <input type="number" id="weight" placeholder="Enter your weight" min="1" step="0.1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="height">Height (cm)</label>
+                                    <input type="number" id="height" placeholder="Enter your height" min="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fitness">Fitness Level</label>
+                                    <select id="fitness">
+                                        <option value="">Select fitness level</option>
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate">Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                        <option value="athlete">Athlete</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="goals">Fasting Goals</label>
+                                    <select id="goals">
+                                        <option value="">Select your goal</option>
+                                        <option value="weight-loss">Weight Loss</option>
+                                        <option value="health">General Health</option>
+                                        <option value="mental-clarity">Mental Clarity</option>
+                                        <option value="longevity">Longevity</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="save-info-btn">Save Information</button>
+                        </section>
+            <!-- Fasting Duration Selection -->
+            <section class="duration-section">
+                <h2>Select Your Fasting Duration</h2>
+                <div class="duration-buttons">
+                    <button class="duration-btn" data-duration="1">1 Day</button>
+                    <button class="duration-btn" data-duration="2">2 Days</button>
+                    <button class="duration-btn" data-duration="3">3 Days</button>
+                    <button class="duration-btn" data-duration="5">5 Days</button>
+                </div>
+            </section>
+
+            <!-- Progress Dashboard -->
+            <section class="dashboard">
+                <h2>Your Fasting Progress</h2>
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <p>Fast Duration: <span id="selected-duration">-</span></p>
+                        <p>Time Elapsed: <span id="time-elapsed">00:00:00</span></p>
+                        <p>Time Remaining: <span id="time-remaining">-</span></p>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p class="progress-percentage"><span id="progress-percent">0</span>% Complete</p>
+                </div>
+            </section>
+
+            <!-- Hydration Tracking -->
+            <section class="hydration-section">
+                <h2>Hydration Tracking</h2>
+                <div class="hydration-info">
+                    <p id="hydration-recommendation">Select a fasting duration to see hydration guidelines</p>
+                    <div class="water-intake">
+                        <label for="water-input">Log Water Intake (ml):</label>
+                        <div class="input-group">
+                            <input type="number" id="water-input" placeholder="Enter amount" min="0">
+                            <button id="log-water-btn" class="log-btn">Log Water</button>
+                        </div>
+                    </div>
+                    <div class="water-log">
+                        <h3>Today's Water Intake</h3>
+                        <p id="total-water">Total: 0 ml</p>
+                        <ul id="water-list" class="water-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vitamin & Nutrient Reminders -->
+            <section class="vitamins-section">
+                <h2>Essential Vitamins & Minerals During Fasting</h2>
+                <div class="vitamin-guidelines">
+                    <div class="vitamin-item">
+                        <h3>Electrolytes</h3>
+                        <p>Sodium, potassium, and magnesium are crucial. Consider electrolyte supplements in your water.</p>
+                    </div>
+                    <div class="vitamin-item">
+                        <h3>Minerals</h3>
+                        <p>Magnesium, calcium, and zinc help maintain bodily functions during fasting.</p>
+                    </div>
+                    <div class="vitamin-item">
+                        <h3>Vitamins</h3>
+                        <p>Take your multivitamins during eating windows to support immune system and energy.</p>
+                    </div>
+                    <div class="vitamin-item">
+                        <h3>Hydration First</h3>
+                        <p>Pure water is your best friend. Aim to drink regularly throughout your fasting period.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Control Buttons -->
+            <section class="controls">
+                <button id="start-btn" class="control-btn start-btn">Start Fast</button>
+                <button id="stop-btn" class="control-btn stop-btn" disabled>Stop Fast</button>
+                <button id="reset-btn" class="control-btn reset-btn">Reset</button>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Stay healthy, stay hydrated! 💧</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
