@@ -10,13 +10,40 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>Fasting Companion</h1>
-            <p class="subtitle">Maintain your health during fasting periods</p>
+            <div class="header-content">
+                <div class="header-icon">⏱️</div>
+                <h1>Fasting Companion</h1>
+                <p class="subtitle">Science-backed guidance for safe, healthy fasting</p>
+                <span id="user-greeting" class="user-greeting" aria-live="polite"></span>
+            </div>
         </header>
+        <!-- step radios and modal toggle (CSS-only controls) -->
+        <input type="radio" name="wizard-step" id="s1" class="step-radio" checked>
+        <input type="radio" name="wizard-step" id="s2" class="step-radio">
+        <input type="radio" name="wizard-step" id="s3" class="step-radio">
+        <input type="radio" name="wizard-step" id="s4" class="step-radio">
+        <input type="radio" name="wizard-step" id="s5" class="step-radio">
+        <input type="checkbox" id="started" class="started-checkbox">
+        <input type="checkbox" id="modal-toggle" class="modal-toggle">
+        
+        <!-- Login modal shown on first load to ask for name -->
+        <div id="login-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal">
+                <div class="modal-icon">👋</div>
+                <h2 id="modal-title">Welcome to Fasting Companion</h2>
+                <p class="muted">Enter your name to get personalized guidance for your fasting journey.</p>
+                <form id="modal-login-form" class="modal-form" onsubmit="return false;">
+                    <input id="modal-name" type="text" placeholder="Your name" aria-label="Your name">
+                        <div class="modal-actions">
+                            <label for="modal-toggle" class="control-btn continue-btn">Continue</label>
+                        </div>
+                </form>
+            </div>
+        </div>
 
         <!-- Main Content -->
         <main class="main-content">
-                        <section class="personal-info-section">
+                        <section class="personal-info-section step" data-step="1">
                             <h2>Your Personal Information</h2>
                             <p style="color: #666; margin-bottom: 20px;">Please fill in your information to get personalized recommendations</p>
                             <div class="info-form">
@@ -57,92 +84,274 @@
                                     </select>
                                 </div>
                             </div>
-                            <button class="save-info-btn">Save Information</button>
+                            <div class="step-actions">
+                                <button class="save-info-btn">Save Information</button>
+                                <label for="s2" class="next-step control-btn">Next</label>
+                            </div>
                         </section>
             <!-- Fasting Duration Selection -->
-            <section class="duration-section">
+            <section class="duration-section step" data-step="2">
+                <div class="section-icon">📅</div>
                 <h2>Select Your Fasting Duration</h2>
+                <p class="section-description">Different fasting durations have distinct health effects. Choose what suits your goals and experience level.</p>
+                <!-- duration radios (placed here so panels can react via CSS sibling selectors) -->
+                <input type="radio" name="duration" id="dur-1" class="duration-input" checked>
+                <input type="radio" name="duration" id="dur-2" class="duration-input">
+                <input type="radio" name="duration" id="dur-3" class="duration-input">
+                <input type="radio" name="duration" id="dur-5" class="duration-input">
+
                 <div class="duration-buttons">
-                    <button class="duration-btn" data-duration="1">1 Day</button>
-                    <button class="duration-btn" data-duration="2">2 Days</button>
-                    <button class="duration-btn" data-duration="3">3 Days</button>
-                    <button class="duration-btn" data-duration="5">5 Days</button>
+                    <label for="dur-1" class="duration-btn">⏰ 1 Day<span class="duration-badge">Beginner</span></label>
+                    <label for="dur-2" class="duration-btn">📍 2 Days<span class="duration-badge">Intermediate</span></label>
+                    <label for="dur-3" class="duration-btn">🎯 3 Days<span class="duration-badge">Advanced</span></label>
+                    <label for="dur-5" class="duration-btn">🏆 5 Days<span class="duration-badge">Expert</span></label>
+                </div>
+
+                <div class="duration-panels">
+                    <div class="panel" data-duration="1">
+                        <h4>✓ 1-Day Fast</h4>
+                        <p class="panel-note"><strong>Best for:</strong> Beginners, weekly resets, autophagy boost</p>
+                        <p class="panel-detail">Hydration: 2.5–3 L per day. Light electrolytes optional. Effects: Metabolism shifts after 12h, minimal muscle loss.</p>
+                    </div>
+                    <div class="panel" data-duration="2">
+                        <h4>✓ 2-Day Fast</h4>
+                        <p class="panel-note"><strong>Best for:</strong> Intermediate fasters, deeper autophagy, cellular repair</p>
+                        <p class="panel-detail">Hydration: 3–3.5 L per day. Add electrolytes from day 2. Effects: Enhanced autophagy, mild ketosis, increased mental clarity.</p>
+                    </div>
+                    <div class="panel" data-duration="3">
+                        <h4>✓ 3-Day Fast</h4>
+                        <p class="panel-note"><strong>Best for:</strong> Experienced fasters, significant health benefits, deeper reset</p>
+                        <p class="panel-detail">Hydration: 3.5–4 L per day. Regular electrolyte supplements essential. Effects: Strong ketosis, immune boost, deep cellular repair.</p>
+                    </div>
+                    <div class="panel" data-duration="5">
+                        <h4>✓ 5-Day Fast</h4>
+                        <p class="panel-note"><strong>Best for:</strong> Expert fasters only. Not recommended without medical guidance.</p>
+                        <p class="panel-detail">Hydration: 4–4.5 L per day. Electrolytes twice daily mandatory. ⚠️ <strong>Consult a doctor first.</strong> Significant cellular changes occur.</p>
+                    </div>
+                </div>
+                <div class="step-actions">
+                    <label for="s1" class="control-btn prev-step">Back</label>
+                    <label for="s3" class="next-step control-btn">Next</label>
                 </div>
             </section>
 
             <!-- Progress Dashboard -->
-            <section class="dashboard">
+            <section class="dashboard step" data-step="3">
+                <div class="section-icon">📊</div>
                 <h2>Your Fasting Progress</h2>
+
+                <!-- Progress radios control the visual progress bar (pure HTML/CSS) -->
+                <input type="radio" name="progress" id="p0" class="progress-radio" checked>
+                <input type="radio" name="progress" id="p25" class="progress-radio">
+                <input type="radio" name="progress" id="p50" class="progress-radio">
+                <input type="radio" name="progress" id="p75" class="progress-radio">
+                <input type="radio" name="progress" id="p100" class="progress-radio">
+
                 <div class="progress-container">
                     <div class="progress-info">
-                        <p>Fast Duration: <span id="selected-duration">-</span></p>
-                        <p>Time Elapsed: <span id="time-elapsed">00:00:00</span></p>
-                        <p>Time Remaining: <span id="time-remaining">-</span></p>
+                        <p>📅 <span class="info-label">Duration:</span> <span id="selected-duration">-</span></p>
+                        <p>⏱️ <span class="info-label">Elapsed:</span> <span id="time-elapsed">00:00:00</span></p>
+                        <p>⏳ <span class="info-label">Remaining:</span> <span id="time-remaining">-</span></p>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill"></div>
+                        <div class="progress-fill"></div>
                     </div>
-                    <p class="progress-percentage"><span id="progress-percent">0</span>% Complete</p>
+                    <p class="progress-percentage">Progress: <span id="progress-percent">0</span>%</p>
+                    <div class="progress-controls">
+                        <label for="p0" class="progress-step">0%</label>
+                        <label for="p25" class="progress-step">25%</label>
+                        <label for="p50" class="progress-step">50%</label>
+                        <label for="p75" class="progress-step">75%</label>
+                        <label for="p100" class="progress-step">100%</label>
+                    </div>
+                    <div class="step-actions">
+                        <label for="s2" class="control-btn prev-step">Back</label>
+                        <label for="s4" class="next-step control-btn">Next</label>
+                    </div>
                 </div>
             </section>
 
             <!-- Hydration Tracking -->
-            <section class="hydration-section">
+            <section class="hydration-section step" data-step="4">
+                <div class="section-icon">💧</div>
                 <h2>Hydration Tracking</h2>
                 <div class="hydration-info">
-                    <p id="hydration-recommendation">Select a fasting duration to see hydration guidelines</p>
+                    <p class="hydration-tip">💡 <strong>Hydration is critical during fasting.</strong> It helps manage hunger, supports metabolism, and aids detoxification.</p>
+                    <p id="hydration-recommendation">Choose a fasting duration to see tailored guidance above, then pick your cumulative water intake below.</p>
+
+                    <!-- Water selection implemented with radio buttons to represent cumulative intake (pure HTML/CSS) -->
                     <div class="water-intake">
-                        <label for="water-input">Log Water Intake (ml):</label>
-                        <div class="input-group">
-                            <input type="number" id="water-input" placeholder="Enter amount" min="0">
-                            <button id="log-water-btn" class="log-btn">Log Water</button>
+                        <!-- radios are siblings of .water-meter so CSS can target the meter and display -->
+                        <input type="radio" name="water" id="w0" class="water-radio" checked>
+                        <input type="radio" name="water" id="w250" class="water-radio">
+                        <input type="radio" name="water" id="w500" class="water-radio">
+                        <input type="radio" name="water" id="w750" class="water-radio">
+                        <input type="radio" name="water" id="w1000" class="water-radio">
+                        <input type="radio" name="water" id="w1250" class="water-radio">
+                        <input type="radio" name="water" id="w1500" class="water-radio">
+                        <input type="radio" name="water" id="w1750" class="water-radio">
+                        <input type="radio" name="water" id="w2000" class="water-radio">
+                        <input type="radio" name="water" id="w2500" class="water-radio">
+                        <input type="radio" name="water" id="w3000" class="water-radio">
+                        <input type="radio" name="water" id="w3500" class="water-radio">
+                        <input type="radio" name="water" id="w4000" class="water-radio">
+                        <input type="radio" name="water" id="w4500" class="water-radio">
+
+                        <p class="water-instruction">Select your current water intake to track hydration during your fast:</p>
+
+                        <div class="water-recommendation">
+                            <p id="water-rec-text">Choose a fasting duration to see your hydration goal.</p>
                         </div>
+
+                        <div class="water-choices">
+                            <label for="w0">0 ml</label>
+                            <label for="w250">250 ml</label>
+                            <label for="w500">500 ml</label>
+                            <label for="w750">750 ml</label>
+                            <label for="w1000">1L</label>
+                            <label for="w1250">1.25L</label>
+                            <label for="w1500">1.5L</label>
+                            <label for="w1750">1.75L</label>
+                            <label for="w2000">2L</label>
+                            <label for="w2500">2.5L</label>
+                            <label for="w3000">3L</label>
+                            <label for="w3500">3.5L</label>
+                            <label for="w4000">4L</label>
+                            <label for="w4500">4.5L</label>
+                        </div>
+
+                        <div class="water-meter" aria-hidden="true">
+                            <div class="meter-fill"></div>
+                        </div>
+                        <div class="water-display">Current Intake: <span class="selected-amount">0 ml</span></div>
                     </div>
-                    <div class="water-log">
-                        <h3>Today's Water Intake</h3>
-                        <p id="total-water">Total: 0 ml</p>
-                        <ul id="water-list" class="water-list"></ul>
+                    <div class="step-actions">
+                        <label for="s3" class="control-btn prev-step">Back</label>
+                        <label for="s5" class="next-step control-btn">Next</label>
                     </div>
                 </div>
             </section>
 
             <!-- Vitamin & Nutrient Reminders -->
-            <section class="vitamins-section">
-                <h2>Essential Vitamins & Minerals During Fasting</h2>
+            <section class="vitamins-section step" data-step="5">
+                <div class="section-icon">⚕️</div>
+                <h2>Health & Wellness During Fasting</h2>
                 <div class="vitamin-guidelines">
                     <div class="vitamin-item">
+                        <div class="vitamin-icon">⚡</div>
                         <h3>Electrolytes</h3>
-                        <p>Sodium, potassium, and magnesium are crucial. Consider electrolyte supplements in your water.</p>
+                        <p>Sodium, potassium, and magnesium regulate muscle function and hydration balance. Especially important on fasts longer than 24 hours.</p>
+                        <p class="tip">💡 Tip: Add electrolyte powder to water or take mineral supplements.</p>
                     </div>
                     <div class="vitamin-item">
+                        <div class="vitamin-icon">🪨</div>
                         <h3>Minerals</h3>
-                        <p>Magnesium, calcium, and zinc help maintain bodily functions during fasting.</p>
+                        <p>Magnesium, calcium, and zinc support bone health, immune function, and energy production during extended fasts.</p>
+                        <p class="tip">💡 Tip: Consider a mineral supplement on days 2+.</p>
                     </div>
                     <div class="vitamin-item">
+                        <div class="vitamin-icon">🥗</div>
                         <h3>Vitamins</h3>
-                        <p>Take your multivitamins during eating windows to support immune system and energy.</p>
+                        <p>Take your multivitamins during eating windows to maintain nutrient stores and support immune health.</p>
+                        <p class="tip">💡 Tip: B-complex vitamins aid energy metabolism.</p>
                     </div>
                     <div class="vitamin-item">
+                        <div class="vitamin-icon">💧</div>
                         <h3>Hydration First</h3>
-                        <p>Pure water is your best friend. Aim to drink regularly throughout your fasting period.</p>
+                        <p>Pure water is your primary tool. Aim to drink regularly throughout your fasting period to manage hunger and support detoxification.</p>
+                        <p class="tip">💡 Tip: Sip slowly; large amounts at once can cause bloating.</p>
                     </div>
+                </div>
+                
+                <div class="safety-section">
+                    <h3>⚠️ Important Safety Guidelines</h3>
+                    <ul class="safety-list">
+                        <li>Stop fasting immediately if you experience severe dizziness, chest pain, or shortness of breath.</li>
+                        <li>People with eating disorders, diabetes, or on medications should consult a doctor before fasting.</li>
+                        <li>Fasts longer than 3 days require medical supervision for most people.</li>
+                        <li>Pregnant and breastfeeding individuals should not fast without medical approval.</li>
+                        <li>Never fast if you're ill or recovering from illness.</li>
+                    </ul>
+                    <div class="safety-checkbox-group" style="margin-top: 15px;">
+                        <input type="checkbox" id="safety-agree" class="safety-checkbox">
+                        <label for="safety-agree" class="safety-checkbox-label">
+                            I have read and understand the safety guidelines and accept responsibility for my fasting
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <label for="s4" class="control-btn prev-step">Back</label>
+                    <label for="s5" class="next-step control-btn">Start Fasting</label>
                 </div>
             </section>
 
             <!-- Control Buttons -->
             <section class="controls">
-                <button id="start-btn" class="control-btn start-btn">Start Fast</button>
-                <button id="stop-btn" class="control-btn stop-btn" disabled>Stop Fast</button>
-                <button id="reset-btn" class="control-btn reset-btn">Reset</button>
+                <label for="started" id="start-btn" class="control-btn start-btn start-label" style="opacity: 0.5; cursor: not-allowed; pointer-events: none;" data-disabled="true">Start Fast</label>
+                <label for="started" id="stop-btn" class="control-btn stop-btn stop-label">Stop Fast</label>
+                <label for="p0" id="reset-btn" class="control-btn reset-btn reset-label">Reset Progress</label>
+            </section>
+
+            <!-- Home screen shown after starting fast -->
+            <section id="home-screen" class="home-screen hidden">
+                <div class="home-card">
+                    <h2 id="home-title">Good luck, <span id="home-name">Faster</span>!</h2>
+                    <div class="home-info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Duration</span>
+                            <span class="info-value" id="home-duration">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Goal</span>
+                            <span class="info-value" id="home-goal">-</span>
+                        </div>
+                    </div>
+                    <div class="countdown-section">
+                        <p class="countdown-label">⏳ Time Remaining</p>
+                        <div class="big-time" id="home-remaining">00:00:00</div>
+                        <div class="home-progress-bar">
+                            <div class="home-progress-fill" id="home-progress-fill"></div>
+                        </div>
+                        <p class="progress-label" id="progress-label">0% Complete</p>
+                    </div>
+                    <div class="water-section">
+                        <h3>💧 Hydration Tracker</h3>
+                        <p class="water-rec-label">Daily Goal: <span id="water-goal">-</span> ml</p>
+                        <p class="water-status">Current Intake: <span id="current-water">0</span> ml</p>
+                        <div class="water-progress-bar">
+                            <div class="water-progress-fill" id="water-progress-fill"></div>
+                        </div>
+                        <p class="water-remaining">Still need: <span id="water-remaining-ml">-</span> ml</p>
+                    </div>
+                    <div class="home-recommendations" id="home-recommendations">
+                        <div class="rec rec-1">
+                            <strong>🎯 1-Day Fast Tips:</strong> Drink regularly throughout the day. Stay active but avoid intense exercise.
+                        </div>
+                        <div class="rec rec-2">
+                            <strong>🎯 2-Day Fast Tips:</strong> Electrolytes are now important. Take electrolytes twice per day. Light activities only.
+                        </div>
+                        <div class="rec rec-3">
+                            <strong>🎯 3-Day Fast Tips:</strong> Strong hydration and electrolytes essential. Electrolytes twice daily. Rest is key.
+                        </div>
+                        <div class="rec rec-5">
+                            <strong>🎯 5-Day Fast Tips:</strong> Medical supervision recommended. Electrolytes 2-3 times daily. Minimize activity. Listen to your body.
+                        </div>
+                    </div>
+                    <div class="home-controls">
+                        <label for="started" class="control-btn stop-label">Stop Fast</label>
+                        <label for="p0" class="control-btn reset-label">Reset</label>
+                    </div>
+                </div>
             </section>
         </main>
 
         <!-- Footer -->
         <footer class="footer">
-            <p>Stay healthy, stay hydrated! 💧</p>
+            <p><strong>Fasting Companion</strong> — Your guide to safe, informed fasting</p>
+            <p class="footer-small">⚕️ Always consult a healthcare provider before starting any fasting regimen.</p>
         </footer>
     </div>
-
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -29,16 +29,67 @@ body {
     text-align: center;
 }
 
+.header-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    animation: bounce 2s infinite;
+}
+
 .header h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
     font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .header .subtitle {
     font-size: 1.1rem;
-    opacity: 0.9;
+    opacity: 0.95;
+    font-weight: 300;
 }
+
+.user-area {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-greeting {
+    font-weight: 600;
+    color: rgba(255,255,255,0.95);
+}
+
+.login-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#login-name {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.95rem;
+}
+
+#login-btn, #logout-btn {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background: rgba(0,0,0,0.12);
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#login-btn:hover, #logout-btn:hover { background: rgba(0,0,0,0.18); }
 
 
 .main-content {
@@ -58,6 +109,20 @@ section h2 {
     padding-bottom: 10px;
 }
 
+.section-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.section-description {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
 .duration-section {
     text-align: center;
 }
@@ -67,9 +132,12 @@ section h2 {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 15px;
     margin-top: 20px;
+    align-items: center;
 }
 
+.duration-input { display: none; }
 .duration-btn {
+    display: inline-block;
     padding: 15px 20px;
     font-size: 1rem;
     font-weight: 600;
@@ -78,7 +146,17 @@ section h2 {
     color: #667eea;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
+    text-align: center;
+    position: relative;
+}
+
+.duration-badge {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 400;
+    opacity: 0.7;
+    margin-top: 4px;
 }
 
 .duration-btn:hover {
@@ -86,10 +164,52 @@ section h2 {
     transform: translateY(-2px);
 }
 
-.duration-btn.active {
+/* When a duration radio is checked, style its label */
+.duration-input:checked + .duration-btn {
     background-color: #667eea;
     color: white;
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+}
+
+/* Style the duration label when its radio is checked (inputs are siblings of .duration-buttons) */
+#dur-1:checked ~ .duration-buttons label[for="dur-1"],
+#dur-2:checked ~ .duration-buttons label[for="dur-2"],
+#dur-3:checked ~ .duration-buttons label[for="dur-3"],
+#dur-5:checked ~ .duration-buttons label[for="dur-5"] {
+    background-color: #667eea;
+    color: white;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+}
+
+.duration-panels { margin-top: 18px; }
+.duration-panels .panel { display: none; }
+/* Show panel depending on checked duration */
+#dur-1:checked ~ .duration-panels .panel[data-duration="1"],
+#dur-2:checked ~ .duration-panels .panel[data-duration="2"],
+#dur-3:checked ~ .duration-panels .panel[data-duration="3"],
+#dur-5:checked ~ .duration-panels .panel[data-duration="5"] {
+    display: block;
+}
+
+.panel-note {
+    background-color: #fff;
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: #444;
+    font-weight: 500;
+}
+
+.panel h4 {
+    color: #667eea;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.panel-detail {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    line-height: 1.6;
 }
 
 
@@ -177,6 +297,11 @@ section h2 {
     font-weight: 500;
 }
 
+.info-label {
+    color: #764ba2;
+    font-weight: 700;
+}
+
 .progress-info span {
     color: #667eea;
     font-weight: 700;
@@ -199,11 +324,44 @@ section h2 {
     transition: width 0.3s ease;
 }
 
+/* Progress controls implemented with radios (placed before progress container in HTML when used).
+   Example classes: .prog-0, .prog-25, .prog-50, .prog-75, .prog-100 applied via checked inputs using sibling selectors. */
+
+/* Generic helper selectors (used if progress radios are included near the control) */
+.progress-radio { display: none; }
+#p0:checked ~ .progress-container .progress-fill { width: 0%; }
+#p25:checked ~ .progress-container .progress-fill { width: 25%; }
+#p50:checked ~ .progress-container .progress-fill { width: 50%; }
+#p75:checked ~ .progress-container .progress-fill { width: 75%; }
+#p100:checked ~ .progress-container .progress-fill { width: 100%; }
+
 .progress-percentage {
     text-align: center;
     font-size: 1.1rem;
     font-weight: 600;
     color: #667eea;
+}
+
+.progress-info .info-highlight { color: #444; font-weight: 700; }
+
+.progress-controls { display: flex; gap: 8px; justify-content: center; margin-top: 8px; flex-wrap: wrap; }
+.progress-step {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #d0d8ff;
+    background: white;
+    color: #667eea;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Active progress step styling when its radio is checked */
+#p0:checked ~ .progress-container .progress-controls label[for="p0"],
+#p25:checked ~ .progress-container .progress-controls label[for="p25"],
+#p50:checked ~ .progress-container .progress-controls label[for="p50"],
+#p75:checked ~ .progress-container .progress-controls label[for="p75"],
+#p100:checked ~ .progress-container .progress-controls label[for="p100"] {
+    background: #667eea; color: #fff; box-shadow: 0 6px 18px rgba(102,126,234,0.25);
 }
 
 
@@ -223,9 +381,110 @@ section h2 {
     font-weight: 500;
 }
 
+.hydration-tip {
+    background: #e8f5e9;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border-left: 4px solid #27ae60;
+    color: #2e7d32;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
 .water-intake {
     margin-bottom: 25px;
 }
+
+.water-instruction {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+}
+
+.water-recommendation {
+    background: #f0f7ff;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+    margin-bottom: 15px;
+}
+
+#water-rec-text {
+    color: #333;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Water selection: use radio buttons to pick cumulative amount (pure HTML/CSS)
+   The radio group appears as pill buttons; the selected one shows as active and updates the visual meter. */
+.water-radio { display: none; }
+.water-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+.water-choices label {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    cursor: pointer;
+    font-weight: 600;
+}
+.water-choices label:hover { background: #f0f4ff; }
+
+/* Meter width controlled by radio checked state (inputs are siblings of .water-meter) */
+#w0:checked ~ .water-meter .meter-fill { width: 0%; }
+#w250:checked ~ .water-meter .meter-fill { width: 5.6%; }
+#w500:checked ~ .water-meter .meter-fill { width: 11.1%; }
+#w750:checked ~ .water-meter .meter-fill { width: 16.7%; }
+#w1000:checked ~ .water-meter .meter-fill { width: 22.2%; }
+#w1250:checked ~ .water-meter .meter-fill { width: 27.8%; }
+#w1500:checked ~ .water-meter .meter-fill { width: 33.3%; }
+#w1750:checked ~ .water-meter .meter-fill { width: 38.9%; }
+#w2000:checked ~ .water-meter .meter-fill { width: 44.4%; }
+#w2500:checked ~ .water-meter .meter-fill { width: 55.6%; }
+#w3000:checked ~ .water-meter .meter-fill { width: 66.7%; }
+#w3500:checked ~ .water-meter .meter-fill { width: 77.8%; }
+#w4000:checked ~ .water-meter .meter-fill { width: 88.9%; }
+#w4500:checked ~ .water-meter .meter-fill { width: 100%; }
+
+/* Style the label button when its radio is checked */
+#w0:checked ~ .water-choices label[for="w0"],
+#w250:checked ~ .water-choices label[for="w250"],
+#w500:checked ~ .water-choices label[for="w500"],
+#w750:checked ~ .water-choices label[for="w750"],
+#w1000:checked ~ .water-choices label[for="w1000"],
+#w1250:checked ~ .water-choices label[for="w1250"],
+#w1500:checked ~ .water-choices label[for="w1500"],
+#w1750:checked ~ .water-choices label[for="w1750"],
+#w2000:checked ~ .water-choices label[for="w2000"],
+#w2500:checked ~ .water-choices label[for="w2500"],
+#w3000:checked ~ .water-choices label[for="w3000"],
+#w3500:checked ~ .water-choices label[for="w3500"],
+#w4000:checked ~ .water-choices label[for="w4000"],
+#w4500:checked ~ .water-choices label[for="w4500"] {
+    background: #667eea; color: #fff; box-shadow: 0 6px 18px rgba(102,126,234,0.18);
+}
+
+.water-meter { height: 18px; background: #e9f2ff; border-radius: 12px; overflow: hidden; margin-top: 12px; }
+.meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg,#67c6ff,#667eea); transition: width 0.25s ease; }
+
+.water-display { margin-top: 8px; font-weight: 700; color: #667eea; }
+
+/* Show selected water amount text using CSS generated content for each radio state */
+.selected-amount { position: relative; color: transparent; }
+#w0:checked ~ .water-meter + .water-display .selected-amount::before { content: '0 ml'; color: #667eea; position: absolute; left: 0; }
+#w250:checked ~ .water-meter + .water-display .selected-amount::before { content: '250 ml'; color: #667eea; position: absolute; left: 0; }
+#w500:checked ~ .water-meter + .water-display .selected-amount::before { content: '500 ml'; color: #667eea; position: absolute; left: 0; }
+#w750:checked ~ .water-meter + .water-display .selected-amount::before { content: '750 ml'; color: #667eea; position: absolute; left: 0; }
+#w1000:checked ~ .water-meter + .water-display .selected-amount::before { content: '1000 ml'; color: #667eea; position: absolute; left: 0; }
+#w1250:checked ~ .water-meter + .water-display .selected-amount::before { content: '1250 ml'; color: #667eea; position: absolute; left: 0; }
+#w1500:checked ~ .water-meter + .water-display .selected-amount::before { content: '1500 ml'; color: #667eea; position: absolute; left: 0; }
+#w1750:checked ~ .water-meter + .water-display .selected-amount::before { content: '1750 ml'; color: #667eea; position: absolute; left: 0; }
+#w2000:checked ~ .water-meter + .water-display .selected-amount::before { content: '2000 ml'; color: #667eea; position: absolute; left: 0; }
+#w2500:checked ~ .water-meter + .water-display .selected-amount::before { content: '2500 ml'; color: #667eea; position: absolute; left: 0; }
+#w3000:checked ~ .water-meter + .water-display .selected-amount::before { content: '3000 ml'; color: #667eea; position: absolute; left: 0; }
+#w3500:checked ~ .water-meter + .water-display .selected-amount::before { content: '3500 ml'; color: #667eea; position: absolute; left: 0; }
+#w4000:checked ~ .water-meter + .water-display .selected-amount::before { content: '4000 ml'; color: #667eea; position: absolute; left: 0; }
+#w4500:checked ~ .water-meter + .water-display .selected-amount::before { content: '4500 ml'; color: #667eea; position: absolute; left: 0; }
 
 .water-intake label {
     display: block;
@@ -324,6 +583,13 @@ section h2 {
     transition: all 0.3s ease;
 }
 
+.vitamin-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
 .vitamin-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
@@ -338,6 +604,72 @@ section h2 {
 .vitamin-item p {
     color: #666;
     line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.vitamin-item .tip {
+    background: #fff9e6;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #856404;
+}
+
+.safety-section {
+    background: #fff3cd;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 5px solid #ff6b6b;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.safety-section h3 {
+    color: #d63031;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.safety-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.safety-list li {
+    padding: 10px 0;
+    color: #4a4a4a;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    line-height: 1.6;
+}
+
+.safety-list li:last-child {
+    border-bottom: none;
+}
+
+.safety-checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.safety-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #667eea;
+}
+
+.safety-checkbox-label {
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
 }
 
 
@@ -410,11 +742,22 @@ section h2 {
     font-weight: 500;
 }
 
+.footer-small {
+    font-size: 0.85rem;
+    margin-top: 8px;
+    color: #999;
+    font-weight: 400;
+}
+
 
 
 @media (max-width: 768px) {
     .header h1 {
         font-size: 2rem;
+    }
+
+    .header-icon {
+        font-size: 2.5rem;
     }
 
     .main-content {
@@ -423,6 +766,10 @@ section h2 {
 
     section h2 {
         font-size: 1.5rem;
+    }
+
+    .section-icon {
+        font-size: 1.8rem;
     }
 
     .duration-buttons {
@@ -441,14 +788,26 @@ section h2 {
         width: 100%;
     }
 
-        .info-form {
-            grid-template-columns: 1fr;
-        }
+    .info-form {
+        grid-template-columns: 1fr;
+    }
+
+    .vitamin-guidelines {
+        grid-template-columns: 1fr;
+    }
+
+    .safety-section {
+        padding: 15px;
+    }
 }
 
 @media (max-width: 480px) {
     .header h1 {
         font-size: 1.5rem;
+    }
+
+    .header-icon {
+        font-size: 2rem;
     }
 
     .header .subtitle {
@@ -463,15 +822,250 @@ section h2 {
         font-size: 1.3rem;
     }
 
+    .section-icon {
+        font-size: 1.6rem;
+    }
+
     .duration-buttons {
         grid-template-columns: 1fr;
+    }
+
+    .duration-badge {
+        font-size: 0.65rem;
     }
 
     .vitamin-guidelines {
         grid-template-columns: 1fr;
     }
 
-        .info-form {
-            grid-template-columns: 1fr;
-        }
+    .info-form {
+        grid-template-columns: 1fr;
+    }
+
+    .modal { padding: 18px; }
+    .step .step-actions { flex-direction: column-reverse; gap:8px; }
+
+    .safety-section h3 {
+        font-size: 1rem;
+    }
+
+    .safety-list li {
+        padding: 8px 0;
+        font-size: 0.9rem;
+    }
+}
+
+/* Modal login */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:60; }
+.modal { background: white; padding: 24px; border-radius: 12px; width: min(420px, 90%); box-shadow: 0 20px 60px rgba(0,0,0,0.4); transform: translateY(-10px); animation: modalIn 300ms ease forwards; }
+
+.modal-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.modal h2 { margin-bottom: 6px; color: #333; font-size: 1.4rem; }
+.modal .muted { color: #666; margin-bottom: 12px; font-size: 0.95rem; }
+.modal-form { display:flex; gap:10px; }
+#modal-name { flex:1; padding:10px; border:2px solid #e6e9f8; border-radius:8px; font-size: 0.95rem; }
+#modal-name:focus { outline: none; border-color: #667eea; box-shadow: 0 0 8px rgba(102, 126, 234, 0.2); }
+.modal-actions { display:flex; gap:8px; align-items:center; }
+
+.continue-btn {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+@keyframes modalIn { from { opacity:0; transform: translateY(-18px) scale(.98);} to { opacity:1; transform: translateY(0) scale(1);} }
+
+/* Steps */
+.step { display: none; opacity: 0; transform: translateY(6px); transition: all 320ms ease; max-height:0; overflow:hidden; }
+.step.active { opacity:1; transform: translateY(0); max-height: 2000px; }
+.step[data-step] { /* hidden by default, shown via radio selectors below */ }
+.step .step-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:16px; }
+.next-step { background: linear-gradient(90deg,#667eea,#764ba2); color: #fff; border: none; padding: 10px 14px; border-radius:8px; }
+.prev-step { background: transparent; border: 1px solid rgba(0,0,0,0.06); padding:10px 14px; border-radius:8px; }
+
+/* Home screen */
+.home-screen { padding: 30px; display:flex; align-items:center; justify-content:center; animation: fadeIn 300ms ease; }
+.home-screen.hidden { display:none; }
+.home-card { background: linear-gradient(180deg,#fff,#f7fbff); padding: 22px; border-radius:12px; width: min(780px, 96%); box-shadow: 0 10px 40px rgba(0,0,0,0.08); text-align:center; }
+.home-card h2 { color: #333; margin-bottom: 15px; }
+
+.home-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.info-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #999;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.countdown-section {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.countdown-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.home-card .big-time { font-size: 2.6rem; font-weight:700; color:#333; margin:12px 0; font-family: 'Courier New', monospace; }
+.home-progress-bar { height:14px; background:#e9f2ff; border-radius:10px; overflow:hidden; margin: 15px 0; }
+.home-progress-fill { height:100%; width:0%; background: linear-gradient(90deg,#67c6ff,#667eea); transition: width 300ms ease; }
+.progress-label { font-size: 0.9rem; color: #667eea; font-weight: 600; }
+
+.water-section {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #e8f5e9;
+}
+
+.water-section h3 {
+    color: #27ae60;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.water-rec-label {
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.water-status {
+    color: #667eea;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.water-progress-bar {
+    height: 12px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.water-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+    transition: width 300ms ease;
+}
+
+.water-remaining {
+    color: #d63031;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.home-card .big-time { font-size: 2.6rem; font-weight:700; color:#333; margin:12px 0; }
+.home-controls { margin-top:12px; display:flex; gap:8px; justify-content:center; flex-wrap: wrap; }
+
+@keyframes fadeIn { from { opacity:0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .home-card .big-time { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .modal { padding: 18px; }
+    .step .step-actions { flex-direction: column-reverse; gap:8px; }
+}
+
+/* Show modal unless modal-toggle is checked */
+/* modal: hide when checked */
+#modal-toggle:checked ~ #login-modal { display: none; }
+
+/* Hydration recommendation text switches based on selected duration (CSS-only) */
+#hydration-recommendation { color: transparent; position: relative; }
+#dur-1:checked ~ .main-content #hydration-recommendation::before { content: 'Aim for ~3 L of water per day for a 1-day fast (spread evenly).'; color: #444; position: absolute; left:0; top:0; }
+#dur-2:checked ~ .main-content #hydration-recommendation::before { content: 'Aim for ~3.5 L of water per day for a 2-day fast; monitor symptoms.'; color: #444; position: absolute; left:0; top:0; }
+#dur-3:checked ~ .main-content #hydration-recommendation::before { content: 'Aim for ~4 L of water per day for multi-day fasts; stay attentive to hydration.'; color: #444; position: absolute; left:0; top:0; }
+#dur-5:checked ~ .main-content #hydration-recommendation::before { content: 'Aim for ~4.5 L of water per day for longer fasts; include electrolytes as needed.'; color: #444; position: absolute; left:0; top:0; }
+
+/* Electrolyte note changes depending on duration */
+#electrolyte-note { color: transparent; position: relative; }
+#dur-1:checked ~ .main-content #electrolyte-note::before { content: 'No electrolytes needed for a 1-day fast.'; color: #666; position: absolute; left:0; top:0; }
+#dur-2:checked ~ .main-content #electrolyte-note::before { content: 'From day 2 onward: take electrolytes twice per day.'; color: #666; position: absolute; left:0; top:0; }
+#dur-3:checked ~ .main-content #electrolyte-note::before { content: 'From day 2 onward: take electrolytes twice per day.'; color: #666; position: absolute; left:0; top:0; }
+#dur-5:checked ~ .main-content #electrolyte-note::before { content: 'From day 2 onward: take electrolytes twice per day.'; color: #666; position: absolute; left:0; top:0; }
+
+/* Show step based on which step radio is selected (radios are before <main>) */
+#s1:checked ~ main .step[data-step="1"],
+#s2:checked ~ main .step[data-step="2"],
+#s3:checked ~ main .step[data-step="3"],
+#s4:checked ~ main .step[data-step="4"],
+#s5:checked ~ main .step[data-step="5"] {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 2000px;
+}
+
+/* When started checkbox is checked, show home screen and hide steps/controls */
+#started:checked ~ main #home-screen { display: flex; }
+#started:checked ~ main .step,
+#started:checked ~ main .controls { display: none; }
+
+/* Enable Start label only after finishing setup (s5 radio checked) */
+.start-label { pointer-events: none; opacity: 0.6; }
+#s5:checked ~ .main-content .controls .start-label { pointer-events: auto; opacity: 1; }
+
+/* Show the correct recommendation based on duration selection */
+.home-recommendations .rec { display: none; background: #fff; padding: 12px; border-radius: 8px; margin-top: 12px; }
+#dur-1:checked ~ .main-content #home-screen .home-recommendations .rec-1,
+#dur-2:checked ~ .main-content #home-screen .home-recommendations .rec-2,
+#dur-3:checked ~ .main-content #home-screen .home-recommendations .rec-3,
+#dur-5:checked ~ .main-content #home-screen .home-recommendations .rec-5 {
+    display: block;
 }
